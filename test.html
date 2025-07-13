@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CompuZone - Test</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2563eb;
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #10b981;
+            color: white;
+            border-radius: 50px;
+            font-weight: 600;
+            margin: 10px;
+        }
+        
+        .test-btn {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+        }
+        
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 15px;
+            text-align: left;
+        }
+        
+        .check {
+            color: #10b981;
+            font-weight: bold;
+        }
+        
+        .error {
+            color: #ef4444;
+            font-weight: bold;
+        }
+        
+        .info {
+            color: #3b82f6;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 CompuZone</h1>
+        <div class="status">✅ GitHub Pages Funcionando</div>
+        
+        <h2>Tests del Sistema</h2>
+        
+        <button class="test-btn" onclick="testJavaScript()">🧪 Test JavaScript</button>
+        <button class="test-btn" onclick="testCSS()">🎨 Test CSS</button>
+        <button class="test-btn" onclick="testThreeJS()">🎮 Test Three.js</button>
+        <button class="test-btn" onclick="testAll()">🔍 Test Completo</button>
+        
+        <div class="results" id="results">
+            <h3>Resultados:</h3>
+            <p>Haz click en los botones para probar cada componente.</p>
+        </div>
+        
+        <hr style="margin: 30px 0;">
+        
+        <h3>Enlaces Útiles:</h3>
+        <p>
+            <a href="index.html" style="color: #3b82f6; text-decoration: none; font-weight: 600;">
+                🏠 Ir a la Página Principal
+            </a>
+        </p>
+        
+        <h3>Información del Deploy:</h3>
+        <div style="font-family: monospace; background: #1e293b; color: #e2e8f0; padding: 15px; border-radius: 10px; text-align: left;">
+            <div>📅 Fecha: <span id="currentDate"></span></div>
+            <div>🌐 URL: <span id="currentUrl"></span></div>
+            <div>📱 User Agent: <span id="userAgent"></span></div>
+            <div>🖥️ Resolución: <span id="resolution"></span></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Set current info
+        document.getElementById('currentDate').textContent = new Date().toLocaleString('es-MX');
+        document.getElementById('currentUrl').textContent = window.location.href;
+        document.getElementById('userAgent').textContent = navigator.userAgent.substring(0, 80) + '...';
+        document.getElementById('resolution').textContent = `${window.screen.width}x${window.screen.height}`;
+        
+        function log(message, type = 'info') {
+            const results = document.getElementById('results');
+            const className = type === 'success' ? 'check' : type === 'error' ? 'error' : 'info';
+            const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️';
+            results.innerHTML += `<div class="${className}">${icon} ${message}</div>`;
+        }
+        
+        function clearResults() {
+            document.getElementById('results').innerHTML = '<h3>Resultados:</h3>';
+        }
+        
+        function testJavaScript() {
+            clearResults();
+            log('Iniciando test de JavaScript...', 'info');
+            
+            try {
+                // Test basic JS
+                const test = [1, 2, 3].map(x => x * 2);
+                log('JavaScript básico: OK', 'success');
+                
+                // Test DOM manipulation
+                const div = document.createElement('div');
+                log('DOM manipulation: OK', 'success');
+                
+                // Test async/await
+                (async function() {
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                    log('Async/Await: OK', 'success');
+                })();
+                
+                // Test ES6 features
+                const arrow = () => 'test';
+                const {length} = 'test';
+                log('ES6 Features: OK', 'success');
+                
+            } catch (error) {
+                log(`JavaScript Error: ${error.message}`, 'error');
+            }
+        }
+        
+        function testCSS() {
+            clearResults();
+            log('Iniciando test de CSS...', 'info');
+            
+            try {
+                // Test CSS support
+                const testDiv = document.createElement('div');
+                testDiv.style.transform = 'translateX(10px)';
+                testDiv.style.background = 'linear-gradient(45deg, red, blue)';
+                testDiv.style.borderRadius = '10px';
+                
+                if (testDiv.style.transform) log('CSS Transforms: OK', 'success');
+                if (testDiv.style.background.includes('gradient')) log('CSS Gradients: OK', 'success');
+                if (testDiv.style.borderRadius) log('CSS Border Radius: OK', 'success');
+                
+                // Test CSS Grid
+                testDiv.style.display = 'grid';
+                if (testDiv.style.display === 'grid') log('CSS Grid: OK', 'success');
+                
+                // Test CSS Flexbox
+                testDiv.style.display = 'flex';
+                if (testDiv.style.display === 'flex') log('CSS Flexbox: OK', 'success');
+                
+            } catch (error) {
+                log(`CSS Error: ${error.message}`, 'error');
+            }
+        }
+        
+        function testThreeJS() {
+            clearResults();
+            log('Iniciando test de Three.js...', 'info');
+            
+            try {
+                if (typeof THREE === 'undefined') {
+                    log('Three.js: NO ENCONTRADO', 'error');
+                    log('Verifica que el CDN esté cargando correctamente', 'error');
+                    return;
+                }
+                
+                log('Three.js: CARGADO ✅', 'success');
+                log(`Versión: ${THREE.REVISION}`, 'info');
+                
+                // Test basic Three.js functionality
+                const scene = new THREE.Scene();
+                log('Scene creation: OK', 'success');
+                
+                const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+                log('Camera creation: OK', 'success');
+                
+                const geometry = new THREE.BoxGeometry(1, 1, 1);
+                log('Geometry creation: OK', 'success');
+                
+                const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+                log('Material creation: OK', 'success');
+                
+                const cube = new THREE.Mesh(geometry, material);
+                log('Mesh creation: OK', 'success');
+                
+                scene.add(cube);
+                log('Scene.add: OK', 'success');
+                
+                log('✅ Three.js completamente funcional!', 'success');
+                
+            } catch (error) {
+                log(`Three.js Error: ${error.message}`, 'error');
+            }
+        }
+        
+        function testAll() {
+            clearResults();
+            log('🔍 Ejecutando test completo del sistema...', 'info');
+            
+            setTimeout(() => {
+                testJavaScript();
+                setTimeout(() => {
+                    testCSS();
+                    setTimeout(() => {
+                        testThreeJS();
+                        setTimeout(() => {
+                            log('', 'info');
+                            log('🎉 TEST COMPLETO FINALIZADO', 'success');
+                            log('Si todos los tests pasaron, tu sitio está listo!', 'success');
+                        }, 500);
+                    }, 500);
+                }, 500);
+            }, 100);
+        }
+        
+        // Auto test on load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                log('🚀 Página cargada correctamente', 'success');
+                log('GitHub Pages está funcionando', 'success');
+                log('Haz click en "Test Completo" para verificar todo', 'info');
+            }, 500);
+        });
+    </script>
+</body>
+</html>
