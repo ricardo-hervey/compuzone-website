@@ -1,236 +1,211 @@
-# 🚀 CompuZone - Plataforma Premium de Computadoras
+# 🛡️ Sistema de Integridad de Archivos (SIA)
 
-Una plataforma web avanzada para la venta de computadoras armadas con configurador 3D interactivo, panel de administración completo y experiencia de usuario de nivel premium.
-
-## ✨ Características Principales
-
-### 🎮 Configurador 3D Interactivo
-- Renderizado en tiempo real con Three.js
-- Visualización de componentes individuales
-- Animaciones de ensamblaje/desensamblaje
-- Efectos de iluminación profesionales
-- Compatibilidad con VR/AR (próximamente)
-
-### 🤖 Asistente IA Integrado
-- Recomendaciones inteligentes de componentes
-- Chat en tiempo real para soporte técnico
-- Análisis de compatibilidad automático
-- Sugerencias de optimización
-
-### 🔧 Panel de Administración
-- Dashboard con analíticas en tiempo real
-- CRUD completo de productos y componentes
-- Gestión de órdenes y usuarios
-- Sistema de reportes avanzado
-- Bulk operations y exportación de datos
-
-### 📱 Progressive Web App (PWA)
-- Instalable en cualquier dispositivo
-- Funcionalidad offline
-- Notificaciones push
-- Sincronización en segundo plano
-
-### 🎨 Diseño Premium
-- Responsive design perfecto
-- Animaciones fluidas 60fps
-- Tema oscuro/claro
-- Efectos visuales avanzados
-- Optimización de performance
-
-## 🛠️ Stack Tecnológico
-
-### Frontend
-- **HTML5/CSS3/JavaScript ES6+**
-- **Three.js** - Renderizado 3D
-- **GSAP** - Animaciones avanzadas
-- **Service Workers** - PWA functionality
-- **CSS Grid/Flexbox** - Layout responsivo
-
-### Backend
-- **PHP 8.1+** - API REST
-- **MySQL 8.0+** - Base de datos
-- **JWT** - Autenticación
-- **Rate Limiting** - Seguridad
-- **File Upload** - Gestión de archivos
-
-### Herramientas de Desarrollo
-- **Git** - Control de versiones
-- **GitHub Pages** - Hosting frontend
-- **Lighthouse** - Auditoría de performance
-- **PWA Builder** - Optimización PWA
-
-## 🚀 Demo en Vivo
-
-**Frontend Demo:** [https://tu-usuario.github.io/compuzone-website](https://tu-usuario.github.io/compuzone-website)
-
-*Nota: El backend PHP no funciona en GitHub Pages. Para funcionalidad completa, deploy en un servidor con soporte PHP.*
-
-## ⚡ Quick Start
-
-### Opción 1: Solo Frontend (GitHub Pages)
-```bash
-# 1. Fork este repositorio
-# 2. Ve a Settings > Pages
-# 3. Selecciona "Deploy from branch: main"
-# 4. Tu sitio estará en: https://tu-usuario.github.io/compuzone-website
-```
-
-### Opción 2: Instalación Completa
-```bash
-# Clonar repositorio
-git clone https://github.com/tu-usuario/compuzone-website.git
-cd compuzone-website
-
-# Configurar servidor web (Apache/Nginx)
-# Crear base de datos MySQL
-# Configurar credenciales en api/endpoints.php
-# Configurar permisos de escritura en uploads/ y cache/
-
-# Acceder a: http://localhost/compuzone-website
-```
-
-## 🔐 Credenciales de Acceso
-
-### Panel de Administración
-- **Usuario:** `admin`
-- **Contraseña:** `compuzone2025`
-
-### API Testing
-```bash
-curl -X POST https://tu-dominio.com/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"username":"admin","password":"compuzone2025"}'
-```
-
-## 📁 Estructura del Proyecto
-
-```
-compuzone-website/
-├── index.html              # Página principal
-├── css/
-│   └── styles.css         # Estilos adicionales
-├── js/
-│   ├── app.js            # JavaScript principal
-│   ├── 3d-scene.js       # Motor 3D
-│   └── admin.js          # Panel administración
-├── api/
-│   └── endpoints.php     # Backend API
-├── assets/
-│   ├── images/           # Imágenes del sitio
-│   └── models/           # Modelos 3D
-├── uploads/              # Archivos subidos
-├── cache/                # Cache del sistema
-├── manifest.json         # Configuración PWA
-├── sw.js                # Service Worker
-└── README.md            # Documentación
-```
-
-## 🎯 Funcionalidades
-
-### ✅ Completadas
-- [x] Diseño responsive premium
-- [x] Configurador 3D interactivo
-- [x] Panel de administración completo
-- [x] Sistema de autenticación
-- [x] API REST segura
-- [x] PWA con offline support
-- [x] Asistente IA básico
-- [x] Sistema de cotizaciones
-- [x] Analytics dashboard
-
-### 🚧 En Desarrollo
-- [ ] Integración con pasarelas de pago
-- [ ] Sistema de inventario avanzado
-- [ ] Notificaciones push
-- [ ] Chat en tiempo real
-- [ ] Integración con CRM
-
-### 🔮 Roadmap
-- [ ] Soporte VR/AR
-- [ ] IA avanzada con GPT-4
-- [ ] App móvil nativa
-- [ ] Marketplace de componentes
-- [ ] Sistema de reviews
-
-## 📊 Performance
-
-### Métricas Actuales
-- **Lighthouse Performance:** 95+
-- **First Contentful Paint:** < 1.2s
-- **Largest Contentful Paint:** < 2.5s
-- **Cumulative Layout Shift:** < 0.1
-- **First Input Delay:** < 100ms
-
-### Optimizaciones Implementadas
-- Lazy loading de imágenes
-- Code splitting automático
-- Service Worker caching
-- Resource hints (preload, prefetch)
-- Critical CSS inlining
-- Image compression y WebP
-
-## 🔒 Seguridad
-
-### Medidas Implementadas
-- JWT authentication
-- Rate limiting por IP
-- Input validation y sanitization
-- CORS configuration
-- SQL injection prevention
-- XSS protection headers
-- File upload restrictions
-
-## 🤝 Contribución
-
-1. Fork el proyecto
-2. Crear feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push al branch (`git push origin feature/AmazingFeature`)
-5. Abrir Pull Request
-
-### Guidelines
-- Seguir convenciones de código existentes
-- Agregar tests para nuevas funcionalidades
-- Actualizar documentación cuando sea necesario
-- Usar commits descriptivos
-
-## 📝 Licencia
-
-Este proyecto está bajo la Licencia MIT. Ver `LICENSE` para más detalles.
-
-## 👥 Equipo
-
-- **Frontend Developer** - Diseño y experiencia de usuario
-- **Backend Developer** - API y base de datos
-- **3D Artist** - Modelado y animaciones
-- **UI/UX Designer** - Interfaz y usabilidad
-
-## 📞 Contacto
-
-- **Website:** [https://compuzone.mx](https://compuzone.mx)
-- **Email:** [info@compuzone.mx](mailto:info@compuzone.mx)
-- **GitHub:** [@compuzone](https://github.com/compuzone)
-- **LinkedIn:** [CompuZone](https://linkedin.com/company/compuzone)
-
-## 🙏 Agradecimientos
-
-- [Three.js](https://threejs.org/) - Renderizado 3D
-- [GSAP](https://greensock.com/) - Animaciones
-- [Inter Font](https://fonts.google.com/specimen/Inter) - Tipografía
-- [Unsplash](https://unsplash.com/) - Imágenes placeholder
-- [GitHub Pages](https://pages.github.com/) - Hosting gratuito
+> Herramienta de ciberseguridad desarrollada en C++ que detecta modificaciones no autorizadas en archivos críticos del sistema, simulando técnicas reales usadas en herramientas como Tripwire y AIDE.
 
 ---
 
-**⭐ Si este proyecto te fue útil, no olvides darle una estrella en GitHub!**
+## ¿Qué problema resuelve?
 
-## 📈 Analytics
+En entornos de producción, un archivo modificado sin autorización puede significar un ataque en curso, malware instalado o una brecha de seguridad. El SIA responde a esa necesidad: calcula una huella digital (hash) de cada archivo, la guarda como referencia, y en cada ejecución detecta si algo cambió.
 
-![GitHub stars](https://img.shields.io/github/stars/tu-usuario/compuzone-website)
-![GitHub forks](https://img.shields.io/github/forks/tu-usuario/compuzone-website)
-![GitHub issues](https://img.shields.io/github/issues/tu-usuario/compuzone-website)
-![GitHub license](https://img.shields.io/github/license/tu-usuario/compuzone-website)
+```
+Primera ejecución:   archivo.txt  →  hash: 4a7f3c  →  guardado en baseline
+Ejecución posterior: archivo.txt  →  hash: 9b2e1a  →  ¡ALERTA: MODIFIED!
+```
 
 ---
 
-*Hecho con ❤️ por el equipo de CompuZone*
+## Arquitectura del Sistema
+
+El SIA está diseñado de forma modular. Cada componente tiene una responsabilidad única y se comunica con el siguiente en cadena:
+
+```
+┌─────────────────┐
+│   File Scanner  │  Lee el archivo y verifica que exista
+└────────┬────────┘
+         │
+┌────────▼────────┐
+│   Hash Engine   │  Procesa el contenido por bloques y genera el hash
+└────────┬────────┘
+         │
+┌────────▼────────┐
+│ Baseline Manager│  Consulta o actualiza el registro en SQLite
+└────────┬────────┘
+         │
+┌────────▼────────┐
+│  Risk Analyzer  │  Compara hashes y emite el estado final
+└─────────────────┘
+```
+
+| Módulo | Archivo fuente | Responsable | Función principal |
+|--------|---------------|-------------|-------------------|
+| File Scanner | `file_scanner.cpp` | Ricardo Hervey | Apertura, lectura y validación del archivo objetivo |
+| Hash Engine | `hash_engine.cpp` | Marco Guadalupe | Generación del hash del contenido por bloques |
+| Baseline Manager | `baseline_manager.cpp` | Josue Castro | Persistencia del baseline en base de datos SQLite |
+| Risk Analyzer | `risk_analyzer.cpp` | Sergio Sepúlveda | Clasificación del estado: `SAFE`, `MODIFIED`, `NEW` |
+
+---
+
+## Estado del Proyecto
+
+**Fase actual:** Segundo Avance — Monitoreo multiarchivo con persistencia SQLite
+
+| Funcionalidad | Estado |
+|---------------|--------|
+| Lectura y validación de archivos | ✅ Completo |
+| Generación de hash por bloques | ✅ Completo |
+| Baseline persistente en SQLite | ✅ Completo |
+| Clasificación de estado del archivo | ✅ Completo |
+| Soporte para múltiples archivos | ✅ Completo |
+| Binarios debug y release en `/bin` | ✅ Completo |
+| SHA-256 criptográfico (OpenSSL) | 🔲 Avance 3 |
+| Monitoreo automático periódico | 🔲 Avance 3 |
+| Configuración externa `.conf` | 🔲 Avance 3 |
+
+---
+
+## Requisitos del Sistema
+
+| Herramienta | Versión mínima | Uso |
+|-------------|---------------|-----|
+| g++ | ≥ 9.0 | Compilación C++ |
+| make | cualquiera | Sistema de build |
+| libsqlite3-dev | ≥ 3.31 | Base de datos del baseline |
+
+### Instalación rápida (Ubuntu/Debian)
+
+```bash
+sudo apt update && sudo apt install build-essential libsqlite3-dev
+```
+
+---
+
+## Compilación
+
+```bash
+make
+```
+
+Genera dos binarios en `/bin`:
+
+| Binario | Descripción |
+|---------|-------------|
+| `bin/file_monitor` | Versión debug — incluye símbolos para análisis |
+| `bin/file_monitor_strip` | Versión release — optimizada, sin símbolos |
+
+Para limpiar artefactos de compilación:
+
+```bash
+make clean
+```
+
+---
+
+## Ejecución
+
+```bash
+# Analizar el archivo de prueba por defecto
+./bin/file_monitor
+
+# Analizar un archivo específico
+./bin/file_monitor <ruta/al/archivo>
+```
+
+### Resultados posibles
+
+| Estado | Significado |
+|--------|-------------|
+| `✅ SAFE` | El archivo no ha cambiado desde el último baseline |
+| `⚠️  MODIFIED` | El hash actual no coincide — posible modificación |
+| `🆕 NEW` | Archivo sin baseline previo — se registra por primera vez |
+
+### Ejemplo de sesión completa
+
+```bash
+# Primera ejecución — crea el baseline
+./bin/file_monitor data/test_file.txt
+[INFO] Archivo nuevo: data/test_file.txt
+[INFO] Hash generado: 4a7f3c8d
+[OK]   Estado: NEW — Baseline registrado en SQLite.
+
+# Segunda ejecución — archivo sin cambios
+./bin/file_monitor data/test_file.txt
+[INFO] Escaneando: data/test_file.txt
+[OK]   Estado: SAFE — Sin modificaciones detectadas.
+
+# Modificamos el archivo y volvemos a ejecutar
+echo "intruso" >> data/test_file.txt
+./bin/file_monitor data/test_file.txt
+[INFO] Escaneando: data/test_file.txt
+[WARN] Estado: MODIFIED — Hash no coincide con el baseline.
+```
+
+---
+
+## Estructura del Repositorio
+
+```
+PIA_Sistema_Integridad_Archivos/
+│
+├── README.md                  → Este archivo
+├── Makefile                   → Reglas de compilación
+├── .gitignore
+│
+├── src/                       → Código fuente
+│   ├── main.cpp
+│   ├── file_scanner.cpp
+│   ├── hash_engine.cpp
+│   ├── baseline_manager.cpp
+│   └── risk_analyzer.cpp
+│
+├── include/                   → Headers de cada módulo
+│   ├── file_scanner.h
+│   ├── hash_engine.h
+│   ├── baseline_manager.h
+│   └── risk_analyzer.h
+│
+├── bin/                       → Binarios compilados
+│   ├── file_monitor           → Debug (con símbolos)
+│   └── file_monitor_strip     → Release (sin símbolos)
+│
+├── data/                      → Archivos de prueba
+│   ├── test_file.txt
+│   └── baseline.db            → Base de datos SQLite (generada en ejecución)
+│
+├── docs/                      → Documentación técnica
+│   ├── design.md
+│   ├── roadmap.md
+│   ├── tests.md
+│   └── report_draft.md
+│
+├── analysis/                  → Análisis del binario
+│   ├── strings_output.txt
+│   └── reversing_notes.md
+│
+└── evidence/                  → Capturas de ejecución y análisis
+```
+
+---
+
+## Seguridad y Consideraciones Técnicas
+
+- El hash actual es **aritmético** (Avance 1 y 2). Será reemplazado por **SHA-256** en el Avance 3 para resistir colisiones intencionales.
+- El baseline se almacena en `baseline.db` (SQLite). En versiones futuras se firmará digitalmente para prevenir manipulación del propio archivo de referencia.
+- El binario de distribución es `file_monitor_strip` — sin símbolos, más difícil de analizar externamente.
+
+---
+
+## Tecnologías
+
+`C++17` · `SQLite3` · `g++ / Make` · `Ghidra` · `Radare2` · `Git / GitHub` · `Ubuntu VM`
+
+---
+
+## Equipo
+
+| Integrante | Módulo | Rol |
+|------------|--------|-----|
+| Ricardo Hervey Estrada Garcia | File Scanner | Lectura y validación de archivos |
+| Marco Antonio Guadalupe | Hash Engine | Generación del hash por bloques |
+| Josue Israel Castro Aguilar | Baseline Manager | Persistencia SQLite e integración |
+| Sergio Pedro Sepúlveda Rodríguez | Risk Analyzer | Clasificación del estado del archivo |
