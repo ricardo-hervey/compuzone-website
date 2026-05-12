@@ -1,211 +1,217 @@
-# 🛡️ Sistema de Integridad de Archivos (SIA)
+# Sistema de Integridad de Archivos (SIA)
+## Objetivo del Proyecto
 
-> Herramienta de ciberseguridad desarrollada en C++ que detecta modificaciones no autorizadas en archivos críticos del sistema, simulando técnicas reales usadas en herramientas como Tripwire y AIDE.
+Desarrollar un sistema modular en C++ capaz de detectar cambios en archivos mediante el uso de funciones hash y comparación contra un baseline previamente almacenado.
 
----
-
-## ¿Qué problema resuelve?
-
-En entornos de producción, un archivo modificado sin autorización puede significar un ataque en curso, malware instalado o una brecha de seguridad. El SIA responde a esa necesidad: calcula una huella digital (hash) de cada archivo, la guarda como referencia, y en cada ejecución detecta si algo cambió.
-
-```
-Primera ejecución:   archivo.txt  →  hash: 4a7f3c  →  guardado en baseline
-Ejecución posterior: archivo.txt  →  hash: 9b2e1a  →  ¡ALERTA: MODIFIED!
-```
+El sistema permite identificar modificaciones en archivos críticos simulando técnicas reales utilizadas en herramientas de ciberseguridad para monitoreo de integridad de archivos.
 
 ---
 
-## Arquitectura del Sistema
+## Descripción Técnica
 
-El SIA está diseñado de forma modular. Cada componente tiene una responsabilidad única y se comunica con el siguiente en cadena:
+Este proyecto implementa un **Sistema de Integridad de Archivos (SIA)** desarrollado en C++, bajo una arquitectura modular.
 
-```
-┌─────────────────┐
-│   File Scanner  │  Lee el archivo y verifica que exista
-└────────┬────────┘
-         │
-┌────────▼────────┐
-│   Hash Engine   │  Procesa el contenido por bloques y genera el hash
-└────────┬────────┘
-         │
-┌────────▼────────┐
-│ Baseline Manager│  Consulta o actualiza el registro en SQLite
-└────────┬────────┘
-         │
-┌────────▼────────┐
-│  Risk Analyzer  │  Compara hashes y emite el estado final
-└─────────────────┘
-```
+El sistema realiza las siguientes operaciones:
 
-| Módulo | Archivo fuente | Responsable | Función principal |
-|--------|---------------|-------------|-------------------|
-| File Scanner | `file_scanner.cpp` | Ricardo Hervey | Apertura, lectura y validación del archivo objetivo |
-| Hash Engine | `hash_engine.cpp` | Marco Guadalupe | Generación del hash del contenido por bloques |
-| Baseline Manager | `baseline_manager.cpp` | Josue Castro | Persistencia del baseline en base de datos SQLite |
-| Risk Analyzer | `risk_analyzer.cpp` | Sergio Sepúlveda | Clasificación del estado: `SAFE`, `MODIFIED`, `NEW` |
+* Leer archivos del sistema
+* Generar un valor hash representativo del contenido
+* Guardar un baseline inicial en base de datos SQLite
+* Comparar hashes en ejecuciones posteriores
+* Detectar modificaciones en uno o múltiples archivos
+* Clasificar el estado del archivo y reportar el resultado
+
+Los módulos principales del sistema son:
+
+* **File Scanner:** Lectura del archivo objetivo y verificación de existencia
+* **Hash Engine:** Generación del hash del contenido por bloques
+* **Baseline Manager:** Creación, lectura y actualización del Baseline en SQLite
+* **Risk Analyzer:** Evaluación del estado del archivo
 
 ---
 
-## Estado del Proyecto
+## Alcance y Límites
 
-**Fase actual:** Segundo Avance — Monitoreo multiarchivo con persistencia SQLite
+### Alcance (Segundo Avance)
 
-| Funcionalidad | Estado |
-|---------------|--------|
-| Lectura y validación de archivos | ✅ Completo |
-| Generación de hash por bloques | ✅ Completo |
-| Baseline persistente en SQLite | ✅ Completo |
-| Clasificación de estado del archivo | ✅ Completo |
-| Soporte para múltiples archivos | ✅ Completo |
-| Binarios debug y release en `/bin` | ✅ Completo |
-| SHA-256 criptográfico (OpenSSL) | 🔲 Avance 3 |
-| Monitoreo automático periódico | 🔲 Avance 3 |
-| Configuración externa `.conf` | 🔲 Avance 3 |
+El sistema actualmente es capaz de:
+
+* Monitorear múltiples archivos de forma dinámica
+* Generar un hash del contenido por bloques
+* Crear un baseline inicial si no existe
+* Comparar hashes en ejecuciones posteriores
+* Detectar modificaciones en los archivos monitoreados
+* Mostrar el estado del archivo:
+
+```
+SAFE
+MODIFIED
+NEW
+```
+
+* Persistir el baseline mediante SQLite
+* Compilar correctamente mediante Makefile
+* Generar binario con símbolos y binario sin símbolos (strip)
+* Ejecutarse en entorno Linux dentro de una Máquina Virtual
 
 ---
 
-## Requisitos del Sistema
+### Límites (Segundo Avance)
 
-| Herramienta | Versión mínima | Uso |
-|-------------|---------------|-----|
-| g++ | ≥ 9.0 | Compilación C++ |
-| make | cualquiera | Sistema de build |
-| libsqlite3-dev | ≥ 3.31 | Base de datos del baseline |
+No se implementa aún:
 
-### Instalación rápida (Ubuntu/Debian)
+* Uso de algoritmos criptográficos (SHA256)
+* Configuración mediante archivos externos
+* Monitoreo periódico automático
+
+Estas funcionalidades se desarrollarán en la entrega final.
+
+---
+
+## Dependencias
 
 ```bash
-sudo apt update && sudo apt install build-essential libsqlite3-dev
+sudo apt install build-essential libsqlite3-dev
 ```
 
 ---
 
 ## Compilación
 
+Para compilar el proyecto:
+
 ```bash
 make
 ```
 
-Genera dos binarios en `/bin`:
+Esto generará los ejecutables en `/bin`:
 
-| Binario | Descripción |
-|---------|-------------|
-| `bin/file_monitor` | Versión debug — incluye símbolos para análisis |
-| `bin/file_monitor_strip` | Versión release — optimizada, sin símbolos |
-
-Para limpiar artefactos de compilación:
-
-```bash
-make clean
+```
+bin/file_monitor          # versión con símbolos (debug)
+bin/file_monitor_strip    # versión sin símbolos (release)
 ```
 
 ---
 
 ## Ejecución
 
-```bash
-# Analizar el archivo de prueba por defecto
-./bin/file_monitor
+Para ejecutar el programa:
 
-# Analizar un archivo específico
+```bash
+./bin/file_monitor
+```
+
+Para analizar un archivo específico:
+
+```bash
 ./bin/file_monitor <ruta/al/archivo>
 ```
 
-### Resultados posibles
-
-| Estado | Significado |
-|--------|-------------|
-| `✅ SAFE` | El archivo no ha cambiado desde el último baseline |
-| `⚠️  MODIFIED` | El hash actual no coincide — posible modificación |
-| `🆕 NEW` | Archivo sin baseline previo — se registra por primera vez |
-
-### Ejemplo de sesión completa
-
-```bash
-# Primera ejecución — crea el baseline
-./bin/file_monitor data/test_file.txt
-[INFO] Archivo nuevo: data/test_file.txt
-[INFO] Hash generado: 4a7f3c8d
-[OK]   Estado: NEW — Baseline registrado en SQLite.
-
-# Segunda ejecución — archivo sin cambios
-./bin/file_monitor data/test_file.txt
-[INFO] Escaneando: data/test_file.txt
-[OK]   Estado: SAFE — Sin modificaciones detectadas.
-
-# Modificamos el archivo y volvemos a ejecutar
-echo "intruso" >> data/test_file.txt
-./bin/file_monitor data/test_file.txt
-[INFO] Escaneando: data/test_file.txt
-[WARN] Estado: MODIFIED — Hash no coincide con el baseline.
-```
+El programa reportará el estado del archivo analizado.
 
 ---
 
-## Estructura del Repositorio
+## Estructura del Proyecto
 
-```
+```text
 PIA_Sistema_Integridad_Archivos/
 │
-├── README.md                  → Este archivo
-├── Makefile                   → Reglas de compilación
+├── README.md
+├── Makefile
 ├── .gitignore
 │
-├── src/                       → Código fuente
+├── src/
 │   ├── main.cpp
 │   ├── file_scanner.cpp
 │   ├── hash_engine.cpp
 │   ├── baseline_manager.cpp
 │   └── risk_analyzer.cpp
 │
-├── include/                   → Headers de cada módulo
+├── include/
 │   ├── file_scanner.h
 │   ├── hash_engine.h
 │   ├── baseline_manager.h
 │   └── risk_analyzer.h
 │
-├── bin/                       → Binarios compilados
-│   ├── file_monitor           → Debug (con símbolos)
-│   └── file_monitor_strip     → Release (sin símbolos)
+├── bin/
+│   ├── file_monitor
+│   └── file_monitor_strip
 │
-├── data/                      → Archivos de prueba
-│   ├── test_file.txt
-│   └── baseline.db            → Base de datos SQLite (generada en ejecución)
-│
-├── docs/                      → Documentación técnica
+├── docs/
 │   ├── design.md
 │   ├── roadmap.md
 │   ├── tests.md
 │   └── report_draft.md
 │
-├── analysis/                  → Análisis del binario
+├── analysis/
 │   ├── strings_output.txt
 │   └── reversing_notes.md
 │
-└── evidence/                  → Capturas de ejecución y análisis
+├── evidence/
+│
+└── data/
+    ├── test_file.txt
+    └── baseline.db
 ```
 
 ---
 
-## Seguridad y Consideraciones Técnicas
+## Integrantes y Responsabilidades Técnicas
 
-- El hash actual es **aritmético** (Avance 1 y 2). Será reemplazado por **SHA-256** en el Avance 3 para resistir colisiones intencionales.
-- El baseline se almacena en `baseline.db` (SQLite). En versiones futuras se firmará digitalmente para prevenir manipulación del propio archivo de referencia.
-- El binario de distribución es `file_monitor_strip` — sin símbolos, más difícil de analizar externamente.
+Ricardo Hervey Estrada Garcia — File Scanner
+Responsable de la lectura de archivos y verificación de existencia.
+
+Marco Antonio Guadalupe — Hash Engine
+Responsable de la generación del hash del contenido del archivo por bloques.
+
+Josue Israel Castro Aguilar — Baseline Manager e Integración
+Responsable del almacenamiento y comparación del baseline en SQLite.
+
+Sergio Pedro Sepulveda Rodriguez — Risk Analyzer
+Responsable de la interpretación del estado del archivo.
 
 ---
 
-## Tecnologías
+## Tecnologías Utilizadas
 
-`C++17` · `SQLite3` · `g++ / Make` · `Ghidra` · `Radare2` · `Git / GitHub` · `Ubuntu VM`
+Lenguaje:
+
+C++
+
+Herramientas:
+
+* g++
+* Make
+* Git
+* Github
+* Visual Studio Code
+* Ubuntu Virtual Machine
+* SQLite
 
 ---
 
-## Equipo
+## Estado Actual del Proyecto
 
-| Integrante | Módulo | Rol |
-|------------|--------|-----|
-| Ricardo Hervey Estrada Garcia | File Scanner | Lectura y validación de archivos |
-| Marco Antonio Guadalupe | Hash Engine | Generación del hash por bloques |
-| Josue Israel Castro Aguilar | Baseline Manager | Persistencia SQLite e integración |
-| Sergio Pedro Sepúlveda Rodríguez | Risk Analyzer | Clasificación del estado del archivo |
+Fase:
+
+Segundo Avance - Monitoreo Multiarchivo con Persistencia SQLite
+
+El sistema actualmente:
+
+* Compila correctamente
+* Ejecuta sin errores
+* Genera Hashes por bloques
+* Crea y actualiza Baseline en SQLite
+* Detecta modificaciones en múltiples archivos
+* Produce binarios debug y release
+
+---
+
+## Notas Técnicas
+
+El sistema utiliza actualmente un algoritmo de hash basado en procesamiento por bloques con manejo mediante `std::string` para mantener compatibilidad con futuras mejoras criptográficas.
+
+La persistencia del baseline migró de archivo plano hacia almacenamiento estructurado utilizando SQLite, permitiendo soporte multiarchivo y consultas eficientes.
+
+En la fase final del proyecto se contempla la integración de algoritmos criptográficos más robustos como SHA256 mediante OpenSSL.
+
+El sistema se encuentra preparado para escalabilidad, monitoreo automático y clasificación avanzada de eventos.
