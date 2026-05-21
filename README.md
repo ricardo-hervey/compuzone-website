@@ -1,170 +1,48 @@
-# Sistema de Integridad de Archivos (SIA)
+# METADATA — Entorno de Reproducibilidad
 
-## Objetivo del Proyecto
+Este archivo documenta el entorno técnico utilizado para el desarrollo, compilación y pruebas del Sistema de Integridad de Archivos (SIA), con el objetivo de garantizar la reproducibilidad del proyecto.
 
-Desarrollar un sistema modular en C++ capaz de detectar cambios en archivos mediante funciones hash criptográficas (SHA256) y comparación contra un baseline previamente almacenado en una base de datos SQLite.
+## Máquina Virtual
 
-El sistema permite identificar modificaciones en archivos críticos simulando técnicas reales utilizadas en herramientas de ciberseguridad para monitoreo de integridad de archivos (File Integrity Monitoring).
+- **Hipervisor:** VMware Workstation
+- **Distribución:** REMnux (basada en Ubuntu)
+- **Arquitectura:** x86_64
+- **Usuario del sistema:** remnux
+- **Ruta del proyecto:** ~/Downloads/PIA_Sistema_Integridad_Archivos-main
 
-## Descripción Técnica
+Se eligió REMnux por ser una distribución especializada en análisis de malware e ingeniería inversa, lo que facilita el análisis estático y dinámico de los binarios generados por el proyecto.
 
-Operaciones principales del sistema:
+## Snapshot
 
-- Lectura de archivos del sistema
-- Generación de hash SHA256 del contenido
-- Almacenamiento del baseline inicial en base de datos SQLite
-- Comparación de hashes en ejecuciones posteriores
-- Detección de modificaciones en uno o múltiples archivos
-- Clasificación del estado del archivo y reporte del resultado
-- Lectura de parámetros del sistema desde archivo de configuración externo (`data/config.txt`)
+- **Snapshot:** Estado funcional del entorno con el sistema compilado y los binarios finales (`file_monitor`, `bin/file_monitor_debug`, `bin/file_monitor_release`) generados correctamente.
+- **Fecha de validación de la ejecución:** 21 de mayo de 2026
 
-Módulos del sistema:
+## Versiones de Herramientas
 
-- **File Scanner** — Lectura del archivo objetivo y verificación de existencia
-- **Hash Engine** — Generación del hash SHA256 mediante OpenSSL
-- **Baseline Manager** — Creación, lectura y actualización del baseline en SQLite
-- **Risk Analyzer** — Evaluación y clasificación del estado del archivo
+| Herramienta        | Versión / Referencia                  |
+|--------------------|---------------------------------------|
+| g++                | 11.x (GCC, paquete `build-essential`) |
+| GNU Make           | 4.x                                   |
+| Git                | 2.x                                   |
+| SQLite 3           | 3.x (`libsqlite3-dev`)                |
+| OpenSSL            | 3.x (`libssl-dev`)                    |
+| Ghidra             | Incluido en REMnux                    |
+| Visual Studio Code | Utilizado como editor principal       |
 
-## Estados Detectados
+## Comandos de Verificación del Entorno
 
-- `NEW` — Archivo monitoreado por primera vez
-- `UNCHANGED` — Archivo sin modificaciones respecto al baseline
-- `MODIFIED` — Archivo modificado respecto al baseline
-- `DELETED` — Archivo previamente registrado que ya no existe
+Para reproducir o validar las versiones exactas instaladas en el entorno:
 
-## Dependencias
+    lsb_release -a
+    uname -a
+    g++ --version
+    make --version
+    sqlite3 --version
+    openssl version
+    git --version
 
-    sudo apt install build-essential libsqlite3-dev libssl-dev
+## Notas
 
-## Compilación
-
-Comando exacto:
-
-    make
-
-Esto genera tres ejecutables:
-
-- `./file_monitor` — Ejecutable principal en la raíz del repositorio, utilizado para ejecución y pruebas generales.
-- `./bin/file_monitor_debug` — Binario compilado con símbolos de depuración (`-g`), utilizado para análisis estático e ingeniería inversa.
-- `./bin/file_monitor_release` — Binario optimizado (`-O2`) y procesado con `strip` (sin símbolos), utilizado para comparación en reversing.
-
-Para limpiar los binarios generados:
-
-    make clean
-
-## Ejecución
-
-Comando exacto:
-
-    ./file_monitor
-
-O bien, utilizando el binario con símbolos:
-
-    ./bin/file_monitor_debug
-
-Al iniciar, el programa presenta un menú interactivo:
-
-    ===== File Integrity Monitor =====
-
-    1. Run Monitor
-    2. Restore Test Environment
-    3. Exit
-
-    Select an option:
-
-- **Opción 1 — Run Monitor:** Procesa los archivos listados en `data/targets.txt`, genera o compara sus hashes SHA256 contra el baseline en SQLite y reporta el estado de cada uno en una tabla.
-- **Opción 2 — Restore Test Environment:** Restaura el entorno de prueba al estado inicial.
-- **Opción 3 — Exit:** Cierra el programa.
-
-Para agregar archivos al monitoreo, incluir su ruta dentro de `data/targets.txt`.
-
-## Reporte Final y Video Demo
-
-- Reporte técnico final: disponible en `docs/report_final.pdf`
-- Video demostrativo: [Ver en YouTube](https://www.youtube.com/watch?v=UgjDE3oR5Jk)
-
-## Estructura del Proyecto
-
-    PIA_Sistema_Integridad_Archivos/
-    │
-    ├── README.md
-    ├── METADATA.md
-    ├── Makefile
-    ├── .gitignore
-    ├── file_monitor
-    │
-    ├── src/
-    │   ├── main.cpp
-    │   ├── file_scanner.cpp
-    │   ├── hash_engine.cpp
-    │   ├── baseline_manager.cpp
-    │   └── risk_analyzer.cpp
-    │
-    ├── include/
-    │   ├── file_scanner.h
-    │   ├── hash_engine.h
-    │   ├── baseline_manager.h
-    │   └── risk_analyzer.h
-    │
-    ├── bin/
-    │   ├── file_monitor_debug
-    │   └── file_monitor_release
-    │
-    ├── docs/
-    │   ├── design.md
-    │   ├── roadmap.md
-    │   ├── tests.md
-    │   ├── report_final.pdf
-    │   └── project_overview.md
-    │
-    ├── analysis/
-    │   ├── strings.txt
-    │   ├── reversing_notes.md
-    │   └── functions.md
-    │
-    ├── evidence/
-    │   ├── 1er_Avance/
-    │   ├── 2do_Avance/
-    │   └── Entrega_Final/
-    │
-    └── data/
-        ├── config.txt
-        ├── notes.txt
-        ├── system.conf
-        ├── temp.log
-        └── targets.txt
-
-## Integrantes y Responsabilidades Técnicas
-
-- **Josué Castro Aguilar** — Arquitectura principal del sistema, manejo de la base de datos SQLite y generación del baseline.
-- **Marco Vargas** — Desarrollo del módulo de hashing (SHA256 / OpenSSL) y análisis estático / reversing mediante Ghidra.
-- **Ricardo Estrada García** — Lógica de procesamiento de archivos, documentación técnica y registro del entorno de ejecución.
-- **Sergio Sepúlveda Rodríguez** — Revisión del repositorio, organización de evidencias, pruebas funcionales y video demostrativo.
-
-## Tecnologías Utilizadas
-
-**Lenguaje:** C++17
-
-**Herramientas:**
-
-- g++
-- GNU Make
-- Git / GitHub
-- Visual Studio Code
-- REMnux (Máquina Virtual sobre VMware Workstation)
-- SQLite 3
-- OpenSSL (SHA256)
-- Ghidra (análisis estático / ingeniería inversa)
-
-## Estado del Proyecto
-
-**Fase:** Entrega Final — Sistema completo con hashing criptográfico, persistencia SQLite y configuración externa.
-
-El sistema:
-
-- Compila correctamente mediante `make`
-- Genera tres ejecutables (raíz, debug y release con `strip`)
-- Calcula hashes SHA256 mediante OpenSSL
-- Crea y actualiza el baseline en SQLite
-- Detecta y clasifica cambios en múltiples archivos
-- Carga parámetros desde `data/config.txt`
+- El proyecto fue desarrollado y probado dentro de la máquina virtual REMnux en VMware Workstation.
+- Las dependencias requeridas para compilar y ejecutar el sistema están listadas en el `README.md`.
+- Los binarios finales se encuentran en `/bin` (`file_monitor_debug` con símbolos y `file_monitor_release` sin símbolos para análisis comparativo).
